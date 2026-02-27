@@ -11,7 +11,7 @@ import java.util.Date;
 public class JwtUtil {
 
     private final String SECRET =
-            "fleetflow-enterprise-secure-key-2026-super-secure";
+            System.getenv().getOrDefault("JWT_SECRET", "fleetflow-enterprise-secure-key-2026-super-secure");
 
     private final long EXPIRATION = 1000 * 60 * 60; // 1 hour
 

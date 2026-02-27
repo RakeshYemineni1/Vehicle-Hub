@@ -1,17 +1,57 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: fleetflow-postgres
+    container_name: vehiclehub-postgres
     environment:
-      POSTGRES_DB: fleetflow
+      POSTGRES_DB: vehiclehub
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - vehiclehub-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vehiclehub-backend
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/vehiclehub
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - vehiclehub-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vehiclehub-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_BASE_URL: http://localhost:8081/api
+    depends_on:
+      - backend
+    networks:
+      - vehiclehub-network
+
+networks:
+  vehiclehub-network:
+    driver: bridge
 
 volumes:
   postgres_data:

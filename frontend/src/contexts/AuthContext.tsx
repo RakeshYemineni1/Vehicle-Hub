@@ -36,11 +36,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const login = async (email: string, password: string) => {
         try {
             const response = await authAPI.login(email, password);
-            const { token } = response.data;
+            const { token, role } = response.data;
             
             const mockUser: User = {
                 email,
-                role: 'Manager',
+                role: role.replace('ROLE_', '').replace('_', ' ').split(' ').map((word: string) => 
+                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                ).join(' ') as UserRole,
                 name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
             };
 

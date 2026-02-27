@@ -43,7 +43,7 @@ export const tripAPI = {
   getById: (id: string) => api.get(`/trips/${id}`),
   create: (data: any) => api.post('/trips', data),
   update: (id: string, data: any) => api.put(`/trips/${id}`, data),
-  complete: (id: string) => api.put(`/trips/${id}/complete`),
+  complete: (id: string) => api.patch(`/trips/${id}/complete`),
 };
 
 export const maintenanceAPI = {
