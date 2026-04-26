@@ -34,7 +34,7 @@ export default function Login() {
                     </div>
                     <div className="space-y-2">
                         <CardTitle className="text-3xl font-bold tracking-tight text-white drop-shadow-sm">Welcome Back</CardTitle>
-                        <CardDescription className="text-slate-400 font-medium text-base">Enter your credentials to access FleetFlow</CardDescription>
+                        <CardDescription className="text-slate-400 font-medium text-base">Enter your credentials to access VehicleHub</CardDescription>
                     </div>
                 </CardHeader>
                 <form onSubmit={handleSubmit}>
@@ -81,7 +81,7 @@ export default function Login() {
             </Card>
 
             <p className="absolute bottom-8 left-0 w-full text-center text-slate-400 text-sm">
-                © 2026 FleetFlow Digital Control System. All rights reserved.
+                © 2026 VehicleHub Digital Control System. All rights reserved.
             </p>
         </div>
     );

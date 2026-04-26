@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Testing FleetFlow APIs..."
+echo "Testing VehicleHub APIs..."
 echo ""
 
 BASE_URL="http://localhost:8081/api"
@@ -19,20 +19,20 @@ echo "✅ Login successful"
 
 # Test 2: Get Vehicles
 echo "2. Testing Get Vehicles..."
-VEHICLES=$(curl -s -X GET "$BASE_URL/vehicles" \
-  -H "Authorization: Bearer $TOKEN")
+curl -s -X GET "$BASE_URL/vehicles" \
+  -H "Authorization: Bearer $TOKEN" > /dev/null
 echo "✅ Vehicles API working"
 
 # Test 3: Get Drivers
 echo "3. Testing Get Drivers..."
-DRIVERS=$(curl -s -X GET "$BASE_URL/drivers" \
-  -H "Authorization: Bearer $TOKEN")
+curl -s -X GET "$BASE_URL/drivers" \
+  -H "Authorization: Bearer $TOKEN" > /dev/null
 echo "✅ Drivers API working"
 
 # Test 4: Get Trips
 echo "4. Testing Get Trips..."
-TRIPS=$(curl -s -X GET "$BASE_URL/trips" \
-  -H "Authorization: Bearer $TOKEN")
+curl -s -X GET "$BASE_URL/trips" \
+  -H "Authorization: Bearer $TOKEN" > /dev/null
 echo "✅ Trips API working"
 
 echo ""

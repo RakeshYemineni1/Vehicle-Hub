@@ -25,8 +25,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const savedUser = localStorage.getItem('fleetflow_user');
-        const token = localStorage.getItem('fleetflow_token');
+        const savedUser = localStorage.getItem('vehiclehub_user');
+        const token = localStorage.getItem('vehiclehub_token');
         if (savedUser && token) {
             setUser(JSON.parse(savedUser));
             setIsAuthenticated(true);
@@ -38,18 +38,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             const response = await authAPI.login(email, password);
             const { token, role } = response.data;
             
+            const roleMap: Record<string, UserRole> = {
+                'ROLE_FLEET_MANAGER': 'Manager',
+                'ROLE_DISPATCHER': 'Dispatcher',
+                'ROLE_SAFETY_OFFICER': 'Safety Officer',
+                'ROLE_FINANCIAL_ANALYST': 'Financial Analyst',
+            };
+
             const mockUser: User = {
                 email,
-                role: role.replace('ROLE_', '').replace('_', ' ').split(' ').map((word: string) => 
-                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                ).join(' ') as UserRole,
+                role: (roleMap[role] ?? role) as UserRole,
                 name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
             };
 
             setUser(mockUser);
             setIsAuthenticated(true);
-            localStorage.setItem('fleetflow_user', JSON.stringify(mockUser));
-            localStorage.setItem('fleetflow_token', token);
+            localStorage.setItem('vehiclehub_user', JSON.stringify(mockUser));
+            localStorage.setItem('vehiclehub_token', token);
 
             navigate('/');
         } catch (error) {
@@ -61,8 +66,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const logout = () => {
         setUser(null);
         setIsAuthenticated(false);
-        localStorage.removeItem('fleetflow_user');
-        localStorage.removeItem('fleetflow_token');
+        localStorage.removeItem('vehiclehub_user');
+        localStorage.removeItem('vehiclehub_token');
         navigate('/login');
     };
 

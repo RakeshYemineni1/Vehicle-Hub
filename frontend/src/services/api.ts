@@ -10,7 +10,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('fleetflow_token');
+  const token = localStorage.getItem('vehiclehub_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

@@ -1,165 +1,89 @@
-# VehicleHub - Fleet Management System
+# VehicleHub
 
-A modern fleet management application built with Spring Boot and React, featuring role-based access control, vehicle tracking, and operational management.
+VehicleHub is a fleet management system for tracking vehicles, drivers, trips, maintenance, and operational costs. It uses role-based access so each user only sees what is relevant to their job.
 
-## How It Works
+---
 
-**Authentication Flow**
-1. User logs in with role-based credentials
-2. JWT token generated and stored for session management
-3. Role-based permissions control access to features
+## Requirements
 
-**Vehicle Management**
-- Add/edit vehicles with details (make, model, license plate)
-- Track vehicle status (Active, Maintenance, Retired)
-- Monitor mileage and fuel consumption
-- Retire vehicles when needed
-
-**Driver Operations**
-- Manage driver profiles and contact information
-- Track license numbers and hire dates
-- Suspend drivers for safety violations
-- Monitor driver performance
-
-**Trip Planning**
-- Create trips with start/end locations
-- Assign vehicles and drivers
-- Track trip status (Scheduled, In Progress, Completed)
-- Record distance and fuel usage
-
-**Maintenance System**
-- Schedule maintenance by vehicle
-- Track maintenance types and costs
-- Monitor maintenance status
-- Generate maintenance reports
-
-**Financial Reporting**
-- Calculate revenue from completed trips
-- Track operational costs (fuel, maintenance)
-- Generate financial summaries
-- Analyze profitability
-
-## Features
-
-- **Vehicle Management** - Track fleet status, maintenance, and utilization
-- **Driver Management** - Monitor driver profiles and performance
-- **Trip Planning** - Schedule and manage vehicle dispatching
-- **Maintenance Tracking** - Record and schedule vehicle maintenance
-- **Financial Reporting** - Revenue and cost analysis
-- **Role-Based Access** - Manager, Dispatcher, Safety Officer, Financial Analyst
-
-## Quick Start
-
-### Prerequisites
 - Docker Desktop
 
-### Run Application
+---
+
+## Running the Application
+
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
-### Access
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:8081/api
-- **Database**: PostgreSQL on port 5432
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8081/api
+- Database: localhost:5432
 
-### Login Credentials
-| Role | Username | Password |
-|------|----------|----------|
-| Manager | manager | password123 |
-| Dispatcher | dispatcher | password123 |
-| Safety Officer | safety | password123 |
-| Financial Analyst | finance | password123 |
+---
 
-## Technology Stack
+## Login Credentials
 
-**Backend**
-- Spring Boot 3.2.0
-- Spring Security + JWT
-- Spring Data JPA
-- PostgreSQL 15
-- Maven
+| Role             | Username   | Password    |
+|------------------|------------|-------------|
+| Manager          | manager    | password123 |
+| Dispatcher       | dispatcher | password123 |
+| Safety Officer   | safety     | password123 |
+| Financial Analyst| finance    | password123 |
 
-**Frontend**
-- React 19
-- TypeScript
-- Vite
-- TailwindCSS
-- Radix UI Components
+---
 
-**Infrastructure**
-- Docker & Docker Compose
-- PostgreSQL 15 Alpine
+## Roles and Access
 
-## Project Structure
+**Manager**
+Full access. Can add, edit, and delete vehicles, drivers, trips, and maintenance records. Views analytics and financial reports.
 
-```
-vehicleHub/
-├── backend/
-│   ├── src/main/java/com/fleetflow/
-│   │   ├── config/          # Security & data configuration
-│   │   ├── controller/      # REST API endpoints
-│   │   ├── dto/            # Data transfer objects
-│   │   ├── entity/         # JPA entities
-│   │   ├── repository/     # Data access layer
-│   │   ├── security/       # JWT & authentication
-│   │   └── service/        # Business logic
-│   └── pom.xml
-├── frontend/
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── contexts/       # React contexts
-│   │   ├── pages/          # Application pages
-│   │   └── services/       # API services
-│   └── package.json
-└── docker-compose.yml
-```
+**Dispatcher**
+Can create and manage trips. Assigns vehicles and drivers. Views fleet and maintenance status.
 
-## API Endpoints
+**Safety Officer**
+Can suspend drivers and view incident reports. Manages maintenance records.
 
-**Authentication**
-- `POST /api/auth/login`
+**Financial Analyst**
+Views trip history, revenue, and cost reports. No write access to operations.
+
+---
+
+## How to Use
 
 **Vehicles**
-- `GET /api/vehicles` - List vehicles
-- `POST /api/vehicles` - Create vehicle (Manager)
-- `PATCH /api/vehicles/{id}/retire` - Retire vehicle
-- `DELETE /api/vehicles/{id}` - Delete vehicle
+Go to Fleet. Add a vehicle with make, model, year, and license plate. Set its status to Available, Active, or Maintenance. Retire vehicles that are no longer in service.
 
 **Drivers**
-- `GET /api/drivers` - List drivers
-- `POST /api/drivers` - Create driver (Manager)
-- `PATCH /api/drivers/{id}/suspend` - Suspend driver
+Go to Drivers. Add a driver with contact details and license number. Suspend a driver if needed. Drivers must be active to be assigned to trips.
 
 **Trips**
-- `GET /api/trips` - List trips
-- `POST /api/trips` - Create trip (Manager/Dispatcher)
-- `PATCH /api/trips/{id}/complete` - Complete trip
+Go to Trips. Create a trip with start and end location. Assign an available vehicle and an active driver. Update the trip status as it progresses. Completed trips feed into financial reports.
 
-**Maintenance & Financial**
-- `GET /api/maintenance` - Maintenance records
-- `GET /api/financial/revenue` - Revenue data
-- `GET /api/financial/costs` - Cost analysis
+**Maintenance**
+Go to Maintenance. Schedule a maintenance record for a vehicle. Track the type, cost, and status. Completed maintenance updates the vehicle's service history.
 
-## Development
+**Analytics**
+Go to Analytics. View utilization rates, trip counts, fuel usage, and cost breakdowns. Available to Manager, Dispatcher, and Financial Analyst.
 
-**View Logs**
+---
+
+## Stopping the Application
+
 ```bash
-docker-compose logs -f [service]
+docker compose down
 ```
 
-**Restart Services**
+To remove all data including the database volume:
+
 ```bash
-docker-compose restart
+docker compose down -v
 ```
 
-**Stop Application**
-```bash
-docker-compose down
-```
+---
 
-## Database
-- **Host**: localhost:5432
-- **Database**: vehiclehub
-- **User**: postgres
-- **Password**: postgres
+## Tech Stack
+
+- Backend: Spring Boot 3, Spring Security, JWT, PostgreSQL 15
+- Frontend: React 19, TypeScript, Vite, TailwindCSS
+- Infrastructure: Docker, Docker Compose

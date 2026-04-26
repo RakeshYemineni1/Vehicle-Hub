@@ -4,6 +4,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
@@ -11,12 +12,12 @@ import java.util.Date;
 public class JwtUtil {
 
     private final String SECRET =
-            System.getenv().getOrDefault("JWT_SECRET", "fleetflow-enterprise-secure-key-2026-super-secure");
+            System.getenv().getOrDefault("JWT_SECRET", "vehiclehub-enterprise-secure-key-2026-super-secure");
 
     private final long EXPIRATION = 1000 * 60 * 60; // 1 hour
 
     private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET.getBytes());
+        return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateToken(String username, String role) {

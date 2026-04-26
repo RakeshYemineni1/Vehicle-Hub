@@ -73,7 +73,7 @@ export default function Settings() {
                                         </div>
                                         <div className="space-y-3">
                                             <label className="text-sm font-semibold text-slate-400 uppercase tracking-wider text-xs">Primary Email</label>
-                                            <Input defaultValue="admin@fleetflow.com" className="bg-white/5 border-white/10 text-slate-400 focus:bg-white/10 transition-all h-12 rounded-xl pointer-events-none opacity-60" readOnly />
+                                            <Input defaultValue="admin@vehiclehub.com" className="bg-white/5 border-white/10 text-slate-400 focus:bg-white/10 transition-all h-12 rounded-xl pointer-events-none opacity-60" readOnly />
                                         </div>
                                         <div className="space-y-3">
                                             <label className="text-sm font-semibold text-slate-400 uppercase tracking-wider text-xs">Timezone</label>
